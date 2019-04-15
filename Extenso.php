@@ -17,9 +17,21 @@ class Extenso
         $this->dicionario = include "dicionario.php";
         $this->tipoDeChave = $dinheiro ? "dinheiro" : "numero";
         $this->centenas = $this->separarCentenas($valor);
-        var_dump($this->centenas);
         $this->fracao = array_pop($this->centenas);
         $this->quantidadeCentenas = count($this->centenas);
+    }
+
+    private function separarCentenas($valor = "0")
+    {
+        if (strpos($valor . "", ".") === false)
+            $valor .= ".000";
+        $partes = explode(".", $valor);
+        foreach ($partes as $indice => $parte)
+            $partes[$indice] = sprintf('%03d', $parte);
+        $valor = implode("", $partes);
+        $valor = chunk_split($valor, 3, ".");
+        $valor = substr($valor, 0, strlen($valor) - 1);
+        return Centena::partes($valor);
     }
 
     public function __toString()
@@ -46,18 +58,20 @@ class Extenso
         return implode($this->dicionario["colas"]["centena"], $this->traducaoCentenaArray(new Centena($centena)));
     }
 
-    private function traduzir($parte, $die = false, $indice = 0){
+    private function traducaoExiste($parte)
+    {
+        return array_key_exists($parte, $this->dicionario["basico"]);
+    }
+
+    private function traduzir($parte, $die = false, $indice = 0)
+    {
         if (!$this->traducaoExiste($parte) && $die) die($parte . " não encontrada");
         $chaveFeminino = $this->feminino && array_key_exists(1, $this->dicionario["basico"][$parte]) ? 1 : 0;
-        if (is_array($this->dicionario["basico"][$parte][$chaveFeminino])){
+        if (is_array($this->dicionario["basico"][$parte][$chaveFeminino])) {
             return $this->dicionario["basico"][$parte][$chaveFeminino][$indice];
         } else {
             return $this->dicionario["basico"][$parte][$chaveFeminino];
         }
-    }
-
-    private function traducaoExiste($parte){
-        return array_key_exists($parte, $this->dicionario["basico"]);
     }
 
     private function traducaoCentenaArray(Centena $centena)
@@ -71,18 +85,6 @@ class Extenso
                 $partes[] = $this->traduzir($centena->dicimalSemUnidade, true, 0);
         if ($centena->unidade > 0) $partes[] = $this->traduzir($centena->unidade, true, 0);
         return $partes;
-    }
-
-    private function separarCentenas($valor = "0"){
-        if (strpos($valor."", ".")=== false)
-            $valor .= ".000";
-        $partes = explode(".", $valor);
-        foreach($partes as $indice => $parte)
-            $partes[$indice] = sprintf('%03d', $parte);
-        $valor = implode("", $partes);
-        $valor = chunk_split($valor, 3, ".");
-        $valor = substr($valor, 0, strlen($valor)-1);
-        return Centena::partes($valor);
     }
 
     private function parteFracionada()
