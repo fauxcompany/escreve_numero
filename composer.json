@@ -1,0 +1,27 @@
+{
+  "name": "fauxcompany/escreve_numero",
+  "description": "Biblioteca que proporcina escrever um número por extenso com opção de moeda e de nome ser de gênero feminino",
+  "type": "package",
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Guilherme Fabrin Franco",
+      "email": "guilherme.fabrin@gmail.com",
+      "homepage": "https://guifabrin.ddns.net"
+    },
+    {
+      "name": "Leonardo Motyczka",
+      "email": "leomoty@gmail.com",
+      "homepage": "https://github.com/leomoty"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "fauxcompany\\EscreveNumero\\": "src/"
+    }
+  }
+}

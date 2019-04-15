@@ -1,5 +1,7 @@
 <?php
 
+namespace escreve_numero\EscreveNumero;
+
 class Centena
 {
 
