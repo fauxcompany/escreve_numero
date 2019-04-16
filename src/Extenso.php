@@ -1,6 +1,6 @@
 <?php
 
-include "Centena.php";
+namespace escreve_numero\EscreveNumero;
 
 class Extenso
 {
@@ -11,14 +11,35 @@ class Extenso
     private $tipoDeChave;
     private $quantidadeCentenas;
 
-    public function __construct($valor = "0", $dinheiro = false, $feminino = false)
+    const NORMAL = "normal";
+    const MOEDA = "moeda";
+    const FEMININO = "feminino";
+
+    public function __construct($valor = "0")
     {
-        $this->feminino = $feminino;
         $this->dicionario = include "dicionario.php";
-        $this->tipoDeChave = $dinheiro ? "dinheiro" : "numero";
         $this->centenas = $this->separarCentenas($valor);
         $this->fracao = array_pop($this->centenas);
         $this->quantidadeCentenas = count($this->centenas);
+    }
+
+    public static function escreva($valor, $tipo = self::NORMAL){
+        return (new self($valor))->escrevaComo($tipo);
+    }
+
+    public function escrevaComo($tipo = self::NORMAL)
+    {
+        if (!in_array($tipo, array(self::NORMAL, self::MOEDA, self::FEMININO)))
+            throw new Exception("Tipo não permitido");
+        $this->feminino = $tipo == self::FEMININO;
+        $this->tipoDeChave = $tipo == self::MOEDA ? "dinheiro" : "numero";
+        if (!isset($this->dicionario)) return false;
+        return $this->parteInteira() . $this->parteFracionada();
+    }
+
+    public function __toString()
+    {
+        return $this->escrevaComo(self::NORMAL);
     }
 
     private function separarCentenas($valor = "0")
@@ -32,12 +53,6 @@ class Extenso
         $valor = chunk_split($valor, 3, ".");
         $valor = substr($valor, 0, strlen($valor) - 1);
         return Centena::partes($valor);
-    }
-
-    public function __toString()
-    {
-        if (!isset($this->dicionario)) return false;
-        return $this->parteInteira() . $this->parteFracionada();
     }
 
     private function parteInteira()
