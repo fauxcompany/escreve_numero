@@ -1,6 +1,6 @@
 <?php
 
-namespace escreve_numero\EscreveNumero;
+namespace fauxcompany\EscreveNumero;
 
 use Exception;
 
