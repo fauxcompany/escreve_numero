@@ -1,6 +1,8 @@
 # Escreva número por extenso
 Este projeto tem como objetivo proporcinar escrever um número por extenso com opção de moeda e de nome ser de gênero feminino.
 
+![https://api.travis-ci.org/fauxcompany/escreve_numero.svg?branch=master](https://api.travis-ci.org/fauxcompany/escreve_numero.svg?branch=master)
+
 ## Exemplos:
 
 ```php
