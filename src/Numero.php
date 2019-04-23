@@ -2,7 +2,9 @@
 
 namespace escreve_numero\EscreveNumero;
 
-class Extenso
+use Exception;
+
+class Numero
 {
     private $fracao;
     private $centenas;
@@ -23,11 +25,12 @@ class Extenso
         $this->quantidadeCentenas = count($this->centenas);
     }
 
-    public static function escreva($valor, $tipo = self::NORMAL){
-        return (new self($valor))->escrevaComo($tipo);
+    public static function porExtenso($valor, $tipo = self::NORMAL){
+        $objeto = new self($valor);
+        return $objeto->porExtensoComo($tipo);
     }
 
-    public function escrevaComo($tipo = self::NORMAL)
+    public function porExtensoComo($tipo = self::NORMAL)
     {
         if (!in_array($tipo, array(self::NORMAL, self::MOEDA, self::FEMININO)))
             throw new Exception("Tipo não permitido");
@@ -39,7 +42,7 @@ class Extenso
 
     public function __toString()
     {
-        return $this->escrevaComo(self::NORMAL);
+        return $this->porExtensoComo(self::NORMAL);
     }
 
     private function separarCentenas($valor = "0")
@@ -57,11 +60,12 @@ class Extenso
 
     private function parteInteira()
     {
-        return implode($this->dicionario["colas"]["centena"], array_filter(array_map(function ($part, $index) {
+        $self = $this;
+        return implode($this->dicionario["colas"]["centena"], array_filter(array_map(function ($part, $index) use($self) {
             if ($part == 0) return NULL;
-            $text = $this->centenaPorExtenso($part);
+            $text = $self->centenaPorExtenso($part);
             $singular = $part == 1 ? "singular" : "plural";
-            return $text . $this->dicionario[$this->tipoDeChave][$singular][$this->quantidadeCentenas - $index];
+            return $text . $self->dicionario[$self->tipoDeChave][$singular][$self->quantidadeCentenas - $index];
         }, $this->centenas, array_keys($this->centenas)), function ($item) {
             return $item != NULL;
         }));
@@ -91,7 +95,7 @@ class Extenso
 
     private function traducaoCentenaArray(Centena $centena)
     {
-        $partes = [];
+        $partes = array();
         if ($centena->centenaSemDecimal > 0) $partes[] = $this->traduzir($centena->centenaSemDecimal, true, 0);
         if ($centena->decimal > 0)
             if ($this->traducaoExiste($centena->decimal))

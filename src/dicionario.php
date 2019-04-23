@@ -1,63 +1,63 @@
 <?php
 
-return [
-    "dinheiro" => [
-        "singular" => [
+return array(
+    "dinheiro" => array(
+        "singular" => array(
             " centavo", " real", " mil", " milhão", " bilhão", " trilhão", " quatrilhão", " quintilhão", " sextilhão", " septilhão", " octilhão", " nonilhão", " decilhão", " undecilhão", " duodecilhão", " tredecilhão"
-        ],
-        "plural" => [
+        ),
+        "plural" => array(
             " centavos", " reais", " mil", " milhões", " bilhões", " trilhões", " quatrilhões", " quintilhões", " sextilhões", " septilhões", " octilhões", " nonilhões", " decilhões", " undecilhões", " duodecilhões", " tredecilhões"
-        ]
-    ],
-    "numero" => [
-        "singular" => [
+        )
+    ),
+    "numero" => array(
+        "singular" => array(
             "", "", " mil", " milhão", " bilhão", " trilhão", " quatrilhão", " quintilhão", " sextilhão", " septilhão", " octilhão", " nonilhão", " decilhão", " undecilhão", " duodecilhão", " tredecilhão"
-        ],
-        "plural" => [
+        ),
+        "plural" => array(
             "", "", " mil", " milhões", " bilhões", " trilhões", " quatrilhões", " quintilhões", " sextilhões", " septilhões", " octilhões", " nonilhões", " decilhões", " undecilhões", " duodecilhões", " tredecilhões"
-        ]
-    ],
-    "basico" => [
-        0 => ["zero"],
-        1 => ["um", "uma"],
-        2 => ["dois", "duas"],
-        3 => ["três"],
-        4 => ["quatro"],
-        5 => ["cinco"],
-        6 => ["seis"],
-        7 => ["sete"],
-        8 => ["oito"],
-        9 => ["nove"],
-        10 => ["dez"],
-        11 => ["onze"],
-        12 => ["doze"],
-        13 => ["treze"],
-        14 => ["quatorze"],
-        15 => ["quinze"],
-        16 => ["dezesseis"],
-        17 => ["dezessete"],
-        18 => ["dezoito"],
-        19 => ["dezenove"],
-        20 => ["vinte"],
-        30 => ["trinta"],
-        40 => ["quarenta"],
-        50 => ["cinquenta"],
-        60 => ["sessenta"],
-        70 => ["setenta"],
-        80 => ["oitenta"],
-        90 => ["noventa"],
-        100 => [["cento", "cem"]],
-        200 => ["duzentos", "duzentas"],
-        300 => ["trezentos", "trezentas"],
-        400 => ["quatrocentos", "quatrocentas"],
-        500 => ["quinhentos", "quinhentas"],
-        600 => ["seiscentos", "seiscentas"],
-        700 => ["setecentos", "setecentas"],
-        800 => ["oitocentos", "oitocentas"],
-        900 => ["novecentos", "novecentas"]
-    ],
-    "colas" => [
+        )
+    ),
+    "basico" => array(
+        0 => array("zero"),
+        1 => array("um", "uma"),
+        2 => array("dois", "duas"),
+        3 => array("três"),
+        4 => array("quatro"),
+        5 => array("cinco"),
+        6 => array("seis"),
+        7 => array("sete"),
+        8 => array("oito"),
+        9 => array("nove"),
+        10 => array("dez"),
+        11 => array("onze"),
+        12 => array("doze"),
+        13 => array("treze"),
+        14 => array("quatorze"),
+        15 => array("quinze"),
+        16 => array("dezesseis"),
+        17 => array("dezessete"),
+        18 => array("dezoito"),
+        19 => array("dezenove"),
+        20 => array("vinte"),
+        30 => array("trinta"),
+        40 => array("quarenta"),
+        50 => array("cinquenta"),
+        60 => array("sessenta"),
+        70 => array("setenta"),
+        80 => array("oitenta"),
+        90 => array("noventa"),
+        100 => array(array("cento", "cem")),
+        200 => array("duzentos", "duzentas"),
+        300 => array("trezentos", "trezentas"),
+        400 => array("quatrocentos", "quatrocentas"),
+        500 => array("quinhentos", "quinhentas"),
+        600 => array("seiscentos", "seiscentas"),
+        700 => array("setecentos", "setecentas"),
+        800 => array("oitocentos", "oitocentas"),
+        900 => array("novecentos", "novecentas")
+    ),
+    "colas" => array(
         "centena" => " e ",
         "fracao" => " com "
-    ]
-];
+    )
+);
