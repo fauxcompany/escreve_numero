@@ -6,9 +6,9 @@ Este projeto tem como objetivo proporcinar escrever um número por extenso com o
 ```php
 include "vendor/autoload.php";
 
-use \escreve_numero\EscreveNumero\Extenso;
+use \fauxcompany\EscreveNumero\Numero;
 
-echo Extenso::porExtenso("999.99")."\n"; //novecentos e noventa e nove com noventa e nove
+echo Numero::porExtenso("999.99")."\n"; //novecentos e noventa e nove com noventa e nove
 $extensoNumero = new Numero(999.99);
 $extensoTexto = new Numero("999.99");
 echo $extensoNumero."\n"; //novecentos e noventa e nove com noventa e nove
