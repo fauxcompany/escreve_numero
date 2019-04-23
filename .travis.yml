@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 7.1
+
+sudo: false
+
+## Cache composer
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - travis_retry composer install --no-interaction
+
+script:
+- vendor/bin/phpunit --bootstrap vendor/autoload.php tests
