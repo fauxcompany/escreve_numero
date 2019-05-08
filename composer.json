@@ -30,6 +30,6 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "4.8.36"
+    "phpunit/phpunit": "8.1.3"
   }
 }
