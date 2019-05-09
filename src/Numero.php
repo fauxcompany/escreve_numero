@@ -7,110 +7,104 @@ use Exception;
 class Numero
 {
     private $fracao;
+    private $fracoes;
     private $centenas;
-    private $feminino;
-    private $dicionario;
-    private $tipoDeChave;
-    private $quantidadeCentenas;
+
+    private $decimal = false;
+    private $feminino = false;
+    private $tipoChave = "numero";
+
+    private $valor;
 
     const NORMAL = "normal";
     const MOEDA = "moeda";
+    const DECIMAL = "decimal";
     const FEMININO = "feminino";
 
     public function __construct($valor = "0")
     {
-        $this->dicionario = include "dicionario.php";
-        $this->centenas = $this->separarCentenas($valor);
-        $this->fracao = array_pop($this->centenas);
-        $this->quantidadeCentenas = count($this->centenas);
+        $this->valor = $valor;
     }
 
-    public static function porExtenso($valor, $tipo = self::NORMAL){
+    public static function extenso($valor, $tipo = self::NORMAL, $zero = false){
         $objeto = new self($valor);
-        return $objeto->porExtensoComo($tipo);
+        return $objeto->extensoComo($tipo, $zero);
     }
 
-    public function porExtensoComo($tipo = self::NORMAL)
+    public function extensoComo($tipo = self::NORMAL, $zero = false)
     {
-        if (!in_array($tipo, array(self::NORMAL, self::MOEDA, self::FEMININO)))
-            throw new Exception("Tipo não permitido");
-        $this->feminino = $tipo == self::FEMININO;
-        $this->tipoDeChave = $tipo == self::MOEDA ? "dinheiro" : "numero";
-        if (!isset($this->dicionario)) return false;
-        return $this->parteInteira() . $this->parteFracionada();
+        $this->tipo($tipo);
+        $this->valor($this->valor);
+        $inteiro = $this->inteiro($zero);
+        $fracao = $this->fracao($zero);
+        if ($tipo == self::DECIMAL) $fracao .= Tradutor::decimal($this->fracao);
+        if (!empty($inteiro)) return Tradutor::colar("fracao", [$inteiro, $fracao]);
+        return $fracao;
     }
 
     public function __toString()
     {
-        return $this->porExtensoComo(self::NORMAL);
+        return $this->extensoComo();
     }
 
-    private function separarCentenas($valor = "0")
+    private function tipo($tipo)
     {
-        if (strpos($valor . "", ".") === false)
-            $valor .= ".000";
+        if (!in_array($tipo, array(self::NORMAL, self::MOEDA, self::FEMININO, self::DECIMAL)))
+            throw new Exception("Tipo não permitido");
+        if ($tipo == self::FEMININO) {
+            $this->feminino = true;
+        } else if ($tipo == self::DECIMAL) {
+            $this->decimal = true;
+        } else if ($tipo == self::MOEDA) {
+            $this->tipoChave = "moeda";
+        }
+    }
+
+    private function centenas($valor = "0")
+    {
         $partes = explode(".", $valor);
-        foreach ($partes as $indice => $parte)
+        foreach ($partes as $indice => $parte) {
             $partes[$indice] = sprintf('%03d', $parte);
+        }
         $valor = implode("", $partes);
         $valor = chunk_split($valor, 3, ".");
         $valor = substr($valor, 0, strlen($valor) - 1);
         return Centena::partes($valor);
     }
 
-    private function parteInteira()
+    private function valor($valor)
     {
-        $self = $this;
-        return implode($this->dicionario["colas"]["centena"], array_filter(array_map(function ($part, $index) use($self) {
-            if ($part == 0) return NULL;
-            $text = $self->centenaPorExtenso($part);
-            $singular = $part == 1 ? "singular" : "plural";
-            return $text . $self->dicionario[$self->tipoDeChave][$singular][$self->quantidadeCentenas - $index];
+        if (strpos($valor . "", ".") === false)
+            $valor .= ".000";
+        $exploded = explode(".", $valor);
+        $inteiro = $exploded[0];
+        $fracao = $exploded[1];
+        $this->centenas = $this->centenas($inteiro);
+        $this->fracao = $fracao;
+        $this->fracoes = $this->centenas($fracao);
+    }
+
+    private function inteiro($zero = false)
+    {
+        $tipoChave = $this->tipoChave;
+        $qtdCentenas = count($this->centenas);
+        return Tradutor::colar("centena", array_filter(array_map(function ($centena, $indice) use ($zero, $tipoChave, $qtdCentenas) {
+            if (!$zero && $centena->zero) return NULL;
+            return $centena->extenso($this->feminino, $zero) . Tradutor::inteiro($tipoChave, $centena, $qtdCentenas - $indice);
         }, $this->centenas, array_keys($this->centenas)), function ($item) {
             return $item != NULL;
         }));
     }
 
-    private function centenaPorExtenso($centena)
+    private function fracao($zero = false)
     {
-        if ($this->traducaoExiste($centena)) return $this->traduzir($centena, false, 1);
-        return implode($this->dicionario["colas"]["centena"], $this->traducaoCentenaArray(new Centena($centena)));
-    }
-
-    private function traducaoExiste($parte)
-    {
-        return array_key_exists($parte, $this->dicionario["basico"]);
-    }
-
-    private function traduzir($parte, $die = false, $indice = 0)
-    {
-        if (!$this->traducaoExiste($parte) && $die) die($parte . " não encontrada");
-        $chaveFeminino = $this->feminino && array_key_exists(1, $this->dicionario["basico"][$parte]) ? 1 : 0;
-        if (is_array($this->dicionario["basico"][$parte][$chaveFeminino])) {
-            return $this->dicionario["basico"][$parte][$chaveFeminino][$indice];
-        } else {
-            return $this->dicionario["basico"][$parte][$chaveFeminino];
-        }
-    }
-
-    private function traducaoCentenaArray(Centena $centena)
-    {
-        $partes = array();
-        if ($centena->centenaSemDecimal > 0) $partes[] = $this->traduzir($centena->centenaSemDecimal, true, 0);
-        if ($centena->decimal > 0)
-            if ($this->traducaoExiste($centena->decimal))
-                $partes[] = $this->traduzir($centena->decimal);
-            else
-                $partes[] = $this->traduzir($centena->dicimalSemUnidade, true, 0);
-        if ($centena->unidade > 0) $partes[] = $this->traduzir($centena->unidade, true, 0);
-        return $partes;
-    }
-
-    private function parteFracionada()
-    {
-        $key = ($this->fracao == 1) ? "singular" : "plural";
-        if ($this->fracao > 0)
-            return $this->dicionario["colas"]["fracao"] . $this->centenaPorExtenso($this->fracao) . $this->dicionario[$this->tipoDeChave][$key][0];
-        return "";
+        $tipoChave = $this->tipoChave;
+        $qtdCentenas = count($this->fracoes);
+        return Tradutor::colar("fracao", array_filter(array_map(function ( $fracao, $indice) use ( $zero, $tipoChave, $qtdCentenas) {
+            if (!$zero && $fracao->zero) return NULL;
+            return $fracao->extenso($this->feminino, $zero) . Tradutor::inteiro($tipoChave, $fracao, $qtdCentenas - $indice - 1);
+        }, $this->fracoes, array_keys($this->fracoes)), function ($item) {
+            return $item != NULL;
+        }));
     }
 }
