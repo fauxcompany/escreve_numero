@@ -10,16 +10,16 @@ include "vendor/autoload.php";
 
 use \fauxcompany\EscreveNumero\Numero;
 
-echo Numero::porExtenso("999.99")."\n"; //novecentos e noventa e nove com noventa e nove
+echo Numero::extenso("999.99")."\n"; //novecentos e noventa e nove com noventa e nove
 $extensoNumero = new Numero(999.99);
 $extensoTexto = new Numero("999.99");
 echo $extensoNumero."\n"; //novecentos e noventa e nove com noventa e nove
 echo $extensoTexto ."\n"; //novecentos e noventa e nove reais com noventa e nove centavos
-echo $extensoNumero->porExtensoComo(Numero::MOEDA)."\n"; //novecentos e noventa e nove reais com noventa e nove centavos
-echo $extensoTexto->porExtensoComo(Numero::MOEDA)."\n"; //novecentas e noventa e nove com noventa e nove
-echo $extensoNumero->porExtensoComo(Numero::FEMININO)."\n"; //novecentas e noventa e nove com noventa e nove
-echo $extensoTexto->porExtensoComo(Numero::FEMININO)."\n"; //novecentas e noventa e nove com noventa e nove
-echo Numero::porExtenso("999999999999999999.99")."\n"; //novecentos e noventa e nove quatrilhões e novecentos e noventa e nove trilhões e novecentos e noventa e nove bilhões e novecentos e noventa e nove milhões e novecentos e noventa e nove mil e novecentos e noventa e nove com noventa e nove
+echo $extensoNumero->extensoComo(Numero::MOEDA)."\n"; //novecentos e noventa e nove reais com noventa e nove centavos
+echo $extensoTexto->extensoComo(Numero::MOEDA)."\n"; //novecentas e noventa e nove com noventa e nove
+echo $extensoNumero->extensoComo(Numero::FEMININO)."\n"; //novecentas e noventa e nove com noventa e nove
+echo $extensoTexto->extensoComo(Numero::FEMININO)."\n"; //novecentas e noventa e nove com noventa e nove
+echo Numero::extenso("999999999999999999.99")."\n"; //novecentos e noventa e nove quatrilhões e novecentos e noventa e nove trilhões e novecentos e noventa e nove bilhões e novecentos e noventa e nove milhões e novecentos e noventa e nove mil e novecentos e noventa e nove com noventa e nove
 ```
 
 ## Limitações:
