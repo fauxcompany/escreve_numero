@@ -1,6 +1,25 @@
 # Escreva número por extenso
-Este projeto tem como objetivo proporcinar escrever um número por extenso com opção de moeda e de nome ser de gênero feminino.
+> Este projeto tem como objetivo proporcinar escrever um número por extenso com opção de moeda e de nome ser de gênero feminino.
 
+## Github
+![tag](https://img.shields.io/github/tag/fauxcompany/escreve_numero.svg)
+![issues](https://img.shields.io/github/issues/fauxcompany/escreve_numero.svg)
+![contributors](https://img.shields.io/github/contributors/fauxcompany/escreve_numero.svg)
+![license](https://img.shields.io/github/license/fauxcompany/escreve_numero.svg)
+![code-size](https://img.shields.io/github/languages/code-size/fauxcompany/escreve_numero.svg)
+![top-languages](https://img.shields.io/github/languages/top/fauxcompany/escreve_numero.svg)
+![languages](https://img.shields.io/github/languages/count/fauxcompany/escreve_numero.svg)
+
+### Social
+![forks](https://img.shields.io/github/forks/fauxcompany/escreve_numero.svg?style=social)
+![stars](https://img.shields.io/github/stars/fauxcompany/escreve_numero.svg?style=social)
+![watchers](https://img.shields.io/github/watchers/fauxcompany/escreve_numero.svg?style=social)
+
+- [guifabrin](https://github.com/guifabrin) - ![followers](https://img.shields.io/github/followers/guifabrin.svg?style=social)
+- [leomoty](https://github.com/leomoty)  ![followers](https://img.shields.io/github/followers/leomoty.svg?style=social)
+
+## Others
+[![BCH compliance](https://bettercodehub.com/edge/badge/fauxcompany/escreve_numero?branch=master)](https://bettercodehub.com/)
 ![https://api.travis-ci.org/fauxcompany/escreve_numero.svg?branch=master](https://api.travis-ci.org/fauxcompany/escreve_numero.svg?branch=master)
 
 ## Exemplos:
