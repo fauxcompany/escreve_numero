@@ -18,7 +18,7 @@
 - [guifabrin](https://github.com/guifabrin) - ![followers](https://img.shields.io/github/followers/guifabrin.svg?style=social)
 - [leomoty](https://github.com/leomoty)  ![followers](https://img.shields.io/github/followers/leomoty.svg?style=social)
 
-## Others
+## Outros
 [![BCH compliance](https://bettercodehub.com/edge/badge/fauxcompany/escreve_numero?branch=master)](https://bettercodehub.com/)
 ![https://api.travis-ci.org/fauxcompany/escreve_numero.svg?branch=master](https://api.travis-ci.org/fauxcompany/escreve_numero.svg?branch=master)
 
