@@ -24,8 +24,8 @@ class Numero
     public function __construct($valor = "0")
     {
         $valores = explode('.', $valor);
-        $limiteDecimais = count(Tradutor::$dicionario["decimal"]["singular"]);
-        if (!empty($valores[1]) && strlen($valores[1])>$limiteDecimais){
+        $limiteDecimais = Tradutor::limiteDecimais();
+        if (!empty($valores[1]) && strlen($valores[1]) > $limiteDecimais){
             trigger_error('Limite de casas decimais é de '.$limiteDecimais.'.');
             $valores[1] = substr($valores[1], 0, $limiteDecimais); 
         }
