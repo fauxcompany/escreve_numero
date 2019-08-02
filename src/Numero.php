@@ -23,7 +23,13 @@ class Numero
 
     public function __construct($valor = "0")
     {
-        $this->valor = $valor;
+        $valores = explode('.', $valor);
+        $limiteDecimais = Tradutor::limiteDecimais();
+        if (!empty($valores[1]) && strlen($valores[1]) > $limiteDecimais){
+            trigger_error('Limite de casas decimais é de '.$limiteDecimais.'.');
+            $valores[1] = substr($valores[1], 0, $limiteDecimais); 
+        }
+        $this->valor = $valores[0].'.'.$valores[1];
     }
 
     public static function extenso($valor, $tipo = self::NORMAL, $zero = false){

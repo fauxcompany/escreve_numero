@@ -205,4 +205,8 @@ class Tradutor
 		$pluralidade = floatval($centena->valor) > 1.0 ? "plural" : "singular";
 		return self::$dicionario[$chave][$pluralidade][$indice];
 	}
+
+	public static function limiteDecimais(){
+		return count(self::$dicionario["decimal"]["singular"]);
+	}
 }
