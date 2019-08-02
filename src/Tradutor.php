@@ -4,7 +4,7 @@ namespace fauxcompany\EscreveNumero;
 
 class Tradutor
 {
-	private static $dicionario = array(
+	public static $dicionario = array(
 		"moeda" => array(
 			"singular" => array(
 				" centavo",
